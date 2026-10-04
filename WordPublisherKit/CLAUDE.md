@@ -2,6 +2,8 @@
 
 @docs/LESSONS.md
 
+First session on a new PC? Read `docs/SESSION-NOTES.md` for how the project got here and the next steps.
+
 ## Who you are working with
 
 The person in this session puts together the weekly bulletin for Park Road
