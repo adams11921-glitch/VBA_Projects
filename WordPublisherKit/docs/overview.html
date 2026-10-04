@@ -1,0 +1,332 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Bulletins in Word – Overview</title>
+<style>
+@page { size: Letter; margin: 0.55in 0.6in; }
+:root { --ink:#1d2433; --muted:#5b6475; --accent:#2b579a; --line:#d7dbe3; --soft:#f3f5f9; }
+* { box-sizing:border-box; }
+body { font-family:"Liberation Sans","DejaVu Sans",Arial,sans-serif; color:var(--ink); font-size:10.5pt; line-height:1.4; margin:0; }
+h1 { font-size:24pt; margin:0 0 4px; color:var(--accent); }
+h2 { font-size:14pt; margin:18px 0 6px; color:var(--accent); border-bottom:2px solid var(--line); padding-bottom:3px; }
+h3 { font-size:11pt; margin:10px 0 4px; }
+p { margin:4px 0 8px; }
+.sub { color:var(--muted); font-size:12pt; margin-bottom:14px; }
+.page { page-break-after:always; }
+.page:last-child { page-break-after:auto; }
+.note { font-size:8.5pt; color:var(--muted); font-style:italic; text-align:center; margin-top:4px; }
+.box { background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:10px 14px; }
+ul { margin:4px 0 8px 18px; padding:0; } li { margin:2px 0; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.steps { counter-reset:s; list-style:none; margin:4px 0 8px; padding:0; }
+.steps li { counter-increment:s; position:relative; padding-left:30px; margin:6px 0; }
+.steps li::before { content:counter(s); position:absolute; left:0; top:-1px; width:21px; height:21px; border-radius:50%; background:var(--accent); color:#fff; font-weight:bold; text-align:center; line-height:21px; font-size:10pt; }
+.fig { border:1px solid #b9c0cc; border-radius:6px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,.12); background:#fff; }
+.cap { font-weight:bold; font-size:10pt; margin:12px 0 5px; }
+
+/* ---- Word window mock ---- */
+.titlebar { background:#2b579a; color:#fff; font-size:8.5pt; padding:4px 10px; display:flex; justify-content:space-between; }
+.tabs { background:#2b579a; display:flex; gap:2px; padding:0 8px; font-size:8.5pt; }
+.tabs span { color:#e4ebf7; padding:4px 9px; }
+.tabs span.on { background:#f3f3f3; color:#2b579a; font-weight:bold; border-radius:3px 3px 0 0; }
+.ribbon { background:#f3f3f3; display:flex; padding:6px 4px 0; border-bottom:1px solid #c8c8c8; }
+.grp { border-right:1px solid #d0d0d0; padding:0 6px; display:flex; flex-direction:column; }
+.grp:last-child { border-right:0; }
+.btns { display:flex; gap:3px; align-items:flex-start; flex:1; }
+.big { width:50px; text-align:center; font-size:7pt; line-height:1.15; }
+.big .ic { width:30px; height:30px; margin:0 auto 3px; }
+.smalls { display:flex; flex-direction:column; gap:3px; font-size:7pt; }
+.smalls div { display:flex; align-items:center; gap:4px; white-space:nowrap; }
+.smalls .ic { width:13px; height:13px; border-radius:3px; }
+.ic { border-radius:5px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:9pt; font-family:"Liberation Serif",serif; }
+.gl { text-align:center; font-size:6.8pt; color:#666; padding:3px 0 2px; margin-top:4px; }
+.c1{background:#2b579a}.c2{background:#7a4fb3}.c3{background:#c0504d}.c4{background:#2e8b57}.c5{background:#d98a1f}.c6{background:#333}.c7{background:#3a87c9}
+.docarea { background:#e6e6e6; padding:14px; display:flex; justify-content:center; gap:10px; }
+
+/* ---- bulletin page mock ---- */
+.bp { width:2.45in; height:2.975in; background:#fff; box-shadow:0 1px 4px rgba(0,0,0,.3); padding:0.17in 0.18in; font-family:"Liberation Serif","DejaVu Serif",serif; font-size:6pt; line-height:1.25; position:relative; overflow:hidden; }
+.bp.lg { width:2.9in; height:3.52in; font-size:6.8pt; padding:0.2in 0.21in; }
+.bp .num { position:absolute; bottom:6px; left:0; right:0; text-align:center; font-size:5.5pt; }
+.ct { font-size:12pt; font-weight:bold; text-align:center; margin-top:12px; }
+.cs { font-style:italic; text-align:center; font-size:8pt; margin:2px 0; }
+.cd { text-align:center; font-size:6.3pt; margin:1px 0; }
+.ph { margin:8px auto; width:88%; height:1.05in; background:repeating-linear-gradient(45deg,#e9e9e9,#e9e9e9 6px,#f4f4f4 6px,#f4f4f4 12px); border:1px dashed #999; display:flex; align-items:center; justify-content:center; color:#777; font-size:6pt; text-align:center; font-family:"Liberation Sans",sans-serif; }
+.bar { background:#000; color:#fff; text-align:center; letter-spacing:1.2px; padding:2px 0; margin:5px 0 6px; }
+.wi { font-weight:bold; font-size:1.12em; margin-top:6px; display:flex; justify-content:space-between; }
+.hl { margin-left:12px; display:flex; justify-content:space-between; }
+.ly { margin-left:22px; } .cho { margin-left:32px; font-style:italic; }
+.ll { margin-left:12px; } .pl { margin-left:12px; font-weight:bold; }
+.sc { margin-left:12px; font-style:italic; text-align:justify; }
+.at { font-weight:bold; margin-top:5px; } .sm { font-size:4.6pt; text-align:center; position:absolute; bottom:18px; left:10px; right:10px; }
+.cr { text-align:right; font-size:.92em; }
+
+/* ---- dialogs ---- */
+.dlg { width:3.1in; border:1px solid #9aa3b2; border-radius:5px; background:#fff; font-size:8pt; box-shadow:0 3px 10px rgba(0,0,0,.18); }
+.dlg .t { background:#f0f0f0; border-bottom:1px solid #ddd; padding:4px 8px; font-size:8pt; }
+.dlg .b { padding:9px 10px; }
+.dlg .in { border:1px solid #7a8495; padding:3px 5px; margin:6px 0 8px; font-size:8pt; }
+.dlg .bt { display:flex; justify-content:flex-end; gap:6px; }
+.dlg .bt span { border:1px solid #9aa3b2; padding:2px 12px; border-radius:3px; background:#f5f5f5; }
+.dlg .bt span.p { border-color:#2b579a; }
+.arrow { font-size:20pt; color:var(--accent); align-self:center; }
+
+/* ---- imposition ---- */
+.sheet { display:flex; border:1px solid #888; background:#fff; width:1.25in; height:.62in; position:relative; }
+.sheet div { flex:1; display:flex; align-items:center; justify-content:center; font-family:"Liberation Serif",serif; font-size:13pt; font-weight:bold; border-right:1px dashed #aaa; }
+.sheet div:last-child { border-right:0; }
+.mini { display:flex; gap:4px; flex-wrap:wrap; }
+.mini div { width:.36in; height:.44in; border:1px solid #888; background:#fff; display:flex; align-items:center; justify-content:center; font-family:"Liberation Serif",serif; font-weight:bold; font-size:11pt; }
+.lbl { font-size:8pt; color:var(--muted); text-align:center; margin-top:2px; }
+table.f { border-collapse:collapse; width:100%; font-size:9.5pt; }
+table.f td { border-bottom:1px solid var(--line); padding:5px 6px; vertical-align:top; }
+table.f td:first-child { font-weight:bold; white-space:nowrap; width:1.45in; color:var(--accent); }
+.callout { display:inline-block; background:#ffd84d; color:#000; border-radius:50%; width:16px; height:16px; text-align:center; font-size:8pt; font-weight:bold; line-height:16px; font-family:"Liberation Sans",sans-serif; }
+</style></head><body>
+
+<!-- ================= PAGE 1 ================= -->
+<div class="page">
+  <h1>Making the Bulletin in Word</h1>
+  <div class="sub">A replacement for Microsoft Publisher: what it does and how to use it</div>
+
+  <p>Microsoft is retiring Publisher, so we are moving the weekly bulletin to Microsoft Word. A small
+  add-in puts a new <b>Bulletin</b> tab at the top of Word with buttons for everything in our bulletin.
+  You work on the pages in reading order, and Word arranges them for folding and stapling when it prints,
+  the same way Publisher did.</p>
+
+  <h2>What it does</h2>
+  <table class="f">
+    <tr><td>New Bulletin</td><td>Starts a complete bulletin in one click: a cover with a spot for a picture,
+      <i>A Reflection Before the Service</i>, the order of worship and the announcement pages. Replace the
+      <span style="font-family:'Liberation Mono',monospace">[bracketed]</span> text with this week's details.</td></tr>
+    <tr><td>Start Next Week</td><td>Copies last week's bulletin to a new file for next Sunday and updates the date
+      everywhere. Last week's file is left unchanged.</td></tr>
+    <tr><td>Order of worship</td><td>Buttons add a <b>Worship Item</b>, <b>Hymn</b> (title, verses, hymnal number and
+      room for the words), <b>Scripture</b> (with <i>Reader / People</i> response), <b>Responsive Reading</b>,
+      <b>Sermon</b> and a black <b>Heading Bar</b>, all already formatted.</td></tr>
+    <tr><td>Announcements</td><td><b>Announcement</b> (Event | Date | Time | Place, then details), a
+      <b>Weekly Schedule</b> table, and <b>New Page</b>.</td></tr>
+    <tr><td>Bulletin Styles</td><td>Select pasted text and choose a style (Lyrics, Chorus, People Line, Small
+      Print…) so it matches the rest of the bulletin.</td></tr>
+    <tr><td>Booklet View</td><td>Shows two pages side by side, like the opened booklet.</td></tr>
+    <tr><td>Check Pages</td><td>A folded booklet needs a multiple of 4 pages. Check Pages shows the page and sheet
+      count and can add blank pages <i>before</i> the back cover.</td></tr>
+    <tr><td>Printing</td><td><b>Print Booklet</b> prints double-sided in folding order. <b>PDF for Printing</b> is
+      for a copier or print shop, and <b>PDF for Website</b> gives one page per PDF page for the website and email.</td></tr>
+    <tr><td>Publisher tab</td><td>For flyers, posters and cards: text boxes and pictures that stay where you put
+      them, linked text boxes, layout guides that don't print, align and arrange tools.</td></tr>
+  </table>
+
+  <h2>Installing (about one minute)</h2>
+  <ol class="steps">
+    <li>Save the three files you were sent (<b>WordPublisherKit.dotm</b>, <b>Install.cmd</b>,
+      <b>Uninstall.cmd</b>) into one folder. If they came in a .zip, right-click it and choose <i>Extract All</i>.</li>
+    <li><b>Close Word.</b> Then double-click <b>Install.cmd</b> and press any key when it says <i>Installed</i>.</li>
+    <li>Open Word. A <b>Bulletin</b> tab now appears next to <b>Home</b>.</li>
+  </ol>
+  <p style="font-size:9pt;color:var(--muted)">Needs Windows with Word 2013 or newer (Microsoft 365 is fine). To remove it,
+  close Word and double-click <b>Uninstall.cmd</b>.</p>
+</div>
+
+<!-- ================= PAGE 2 ================= -->
+<div class="page">
+  <h2 style="margin-top:0">1 · The Bulletin tab</h2>
+  <div class="fig">
+    <div class="titlebar"><span>Bulletin 2026-10-11.docx – Word</span><span>— ☐ ✕</span></div>
+    <div class="tabs"><span>File</span><span class="on">Bulletin</span><span>Home</span><span>Publisher</span><span>Insert</span><span>Layout</span><span>Review</span><span>View</span></div>
+    <div class="ribbon">
+      <div class="grp"><div class="btns">
+        <div class="big"><div class="ic c1">+</div>New<br>Bulletin ▾</div>
+        <div class="big"><div class="ic c4">7</div>Start Next<br>Week</div>
+        <div class="smalls"><div><span class="ic c7"></span>Set Date</div><div><span class="ic c2"></span>Booklet View</div><div><span class="ic c6"></span>Church Settings</div></div>
+      </div><div class="gl">Bulletin</div></div>
+      <div class="grp"><div class="btns">
+        <div class="big"><div class="ic c1">≡</div>Worship<br>Item</div>
+        <div class="big"><div class="ic c2">♪</div>Hymn</div>
+        <div class="big"><div class="ic c3">✝</div>Scripture</div>
+        <div class="smalls"><div><span class="ic c4"></span>Responsive Reading</div><div><span class="ic c5"></span>Sermon</div><div><span class="ic c6"></span>Heading Bar</div></div>
+      </div><div class="gl">Order of Worship</div></div>
+      <div class="grp"><div class="btns">
+        <div class="big"><div class="ic c5">!</div>Announce-<br>ment</div>
+        <div class="smalls"><div><span class="ic c7"></span>Weekly Schedule</div><div><span class="ic c1"></span>New Page</div></div>
+      </div><div class="gl">Announcements</div></div>
+      <div class="grp"><div class="btns">
+        <div class="big"><div class="ic c2">A</div>Bulletin<br>Styles ▾</div>
+      </div><div class="gl">Format Text</div></div>
+      <div class="grp"><div class="btns">
+        <div class="big"><div class="ic c4">▣</div>Picture</div>
+        <div class="smalls"><div><span class="ic c7"></span>Text Box</div></div>
+      </div><div class="gl">Pictures</div></div>
+      <div class="grp"><div class="btns">
+        <div class="big"><div class="ic c6">⎙</div>Print<br>Booklet</div>
+        <div class="smalls"><div><span class="ic c5"></span>Check Pages</div><div><span class="ic c3"></span>PDF for Printing</div><div><span class="ic c3"></span>PDF for Website</div></div>
+      </div><div class="gl">Print</div></div>
+    </div>
+    <div class="docarea">
+      <div class="bp">
+        <div class="ct">Park Road<br>Presbyterian Church</div>
+        <div class="cs">The Lord's Day Worship</div>
+        <div class="cs" style="font-style:normal">October 11, 2026</div>
+        <div class="ph">Picture placeholder<br>Select me, then click Picture</div>
+        <div class="cd">Lord's Day Worship | 9:00 &amp; 11:15 AM</div>
+        <div class="cd">Hollywood, Florida</div>
+        <div class="cd">parkroadpres.org</div>
+      </div>
+      <div class="bp">
+        <div style="font-size:5.6pt">October 11, 2026</div>
+        <div class="bar">A Reflection Before the Service</div>
+        <p style="margin:0 0 5px">[Type or paste a reflection, poem or quotation here.]</p>
+        <div class="cr">— [Author, source]</div>
+        <div class="sm">Scripture taken from the NEW AMERICAN STANDARD BIBLE<br>Hymns and Praise Songs printed in our bulletin are used by permission through our Church Copyright License #337734</div>
+        <div class="num">2</div>
+      </div>
+    </div>
+  </div>
+  <div class="note">Illustration of Word after clicking New Bulletin, in Booklet View. Icons and colors in your copy of Word will look slightly different.</div>
+
+  <h2>2 · Adding a hymn</h2>
+  <p>Click where the hymn should go and press <b>Hymn</b>. Word asks a few short questions and inserts the hymn
+  in the bulletin's format.</p>
+  <div style="display:flex;gap:10px;align-items:center">
+    <div class="dlg"><div class="t">Insert Hymn</div><div class="b">Hymn or song title:
+      <div class="in">The Church's One Foundation</div>
+      <div class="bt"><span class="p">OK</span><span>Cancel</span></div></div></div>
+    <div class="arrow">→</div>
+    <div class="dlg"><div class="t">Insert Hymn</div><div class="b">Hymnal number, or the author for songs not in the hymnal (optional):
+      <div class="in">347</div>
+      <div class="bt"><span class="p">OK</span><span>Cancel</span></div></div></div>
+  </div>
+  <p style="margin-top:8px">It also asks for a heading (e.g. <i>The Opening Hymn of Praise</i>) and which verses to sing.
+  For songs not in the hymnal, answer <b>Yes</b> to “Add space to paste the words?”. The result:</p>
+  <div class="box" style="font-family:'Liberation Serif',serif;font-size:10pt;padding:8px 16px">
+    <div style="font-weight:bold;font-size:11pt">The Opening Hymn of Praise</div>
+    <div style="margin-left:22px;display:flex;justify-content:space-between"><span>“The Church's One Foundation” (vv. 1-2, 4-6)</span><span>#347</span></div>
+  </div>
+  <div class="note">Illustration. The number lines up at the right edge automatically.</div>
+</div>
+
+<!-- ================= PAGE 3 ================= -->
+<div class="page">
+  <h2 style="margin-top:0">3 · The order of worship</h2>
+  <div style="display:flex;gap:18px;align-items:flex-start">
+    <div class="bp lg" style="flex:none">
+      <div class="wi">The Prelude</div>
+      <div class="wi">The Welcome and Announcements</div>
+      <div class="wi">The Call to Worship: Psalm 150</div>
+      <div class="ll">Leader: Praise the LORD! Praise God in His sanctuary;</div>
+      <div class="pl">People: Praise Him in His mighty expanse.</div>
+      <div class="wi">The Opening Hymn of Praise</div>
+      <div class="hl"><span>“The Church's One Foundation” (vv. 1-2, 4-6)</span><span>#347</span></div>
+      <div class="hl"><span>“Come Lord Jesus”</span><span>Tomlin/Ingram/Cates</span></div>
+      <div class="ly">All of creation, all of the earth,<br>make straight a highway, a path for the Lord</div>
+      <div class="cho">Like a bride waiting for her groom,<br>we'll be a church ready for You</div>
+      <div class="wi">The Scripture Reading: Nehemiah 2:11–3:5</div>
+      <div class="sc">So I came to Jerusalem and was there three days. And I arose in the night, I and a few men with me…</div>
+      <div class="ll">Reader: The Word of the Lord</div>
+      <div class="pl">People: Thanks be to God!</div>
+      <div class="wi"><span>The Sermon</span><span style="font-weight:normal">— T. J. Campo</span></div>
+      <div class="ll">Nehemiah 2:11–3:5 | Not Just Another Brick in the Wall</div>
+      <div class="num">3</div>
+    </div>
+    <div style="font-size:9.5pt">
+      <p><b>Everything moves to fit.</b> The order of worship is ordinary text, so adding, removing or reordering
+      items pushes the rest down or up. No boxes to resize or link.</p>
+      <p><b>Each kind of line has its own style:</b></p>
+      <ul>
+        <li><b>Worship Item</b>: bold heading, with optional text at the right edge</li>
+        <li><b>Hymn Line</b>: title and verses, hymnal number at the right</li>
+        <li><b>Lyrics</b> and <b>Chorus</b> (indented, chorus in italics)</li>
+        <li><b>Leader Line</b> and <b>People Line</b> (the congregation's part in bold)</li>
+        <li><b>Scripture Text</b>: italic, evenly justified</li>
+      </ul>
+      <p><b>Pasting words from a website or email?</b> Paste them, select them, then pick a style from
+      <b>Bulletin Styles</b> so they match.</p>
+      <p><b>Change a style once and every line updates.</b> For example, to make all hymn words larger,
+      right-click <i>Lyrics</i> in Word's Styles list and choose Modify.</p>
+    </div>
+  </div>
+  <div class="note">Illustration of a bulletin page with sample content.</div>
+
+  <h2>4 · Announcements</h2>
+  <div style="display:flex;gap:18px;align-items:flex-start">
+    <div class="bp lg" style="flex:none">
+      <div class="bar">THIS WEEK at Park Road</div>
+      <div>Welcome! We are glad to have you with us today.</div>
+      <table style="font-size:6.3pt;margin:4px 0 2px;border-collapse:collapse;width:100%">
+        <tr><td style="font-weight:bold">Sunday</td><td>9:00, 11:15 AM</td><td>Worship Service</td></tr>
+        <tr><td></td><td>10:10 AM</td><td>All-Church Sunday Class</td></tr>
+        <tr><td style="font-weight:bold">Monday</td><td>10:00 AM – Noon</td><td>Women in Stitches (Rec Room)</td></tr>
+        <tr><td style="font-weight:bold">Tuesday</td><td>6:30–8:00 PM</td><td>Men's Bible Study</td></tr>
+      </table>
+      <div class="bar">UPCOMING THIS MONTH at Park Road</div>
+      <div class="at">Pumpkin Decorating Party! | Sat., Oct. 17 | 2–4 PM | Fellowship Hall</div>
+      <div>Come anytime between 2–4 PM to decorate a pumpkin, enjoy fall treats, and have fun with your church family.</div>
+      <div class="at">S.A.L.T. Lunch Gathering | Wed., Oct. 21 | 11:30 AM</div>
+      <div>Join the SALT group for lunch at Rendezvous Restaurant. Please sign up on the Keeping in Touch form.</div>
+      <div class="num">14</div>
+    </div>
+    <div style="font-size:9.5pt">
+      <p><b>Announcement</b> asks for the event name and “when and where”, then adds a bold title line and a
+      details line below it.</p>
+      <p><b>Weekly Schedule</b> adds a Day / Time / Event table with no borders. Press Tab to move between cells
+      and Tab in the last cell to add a row.</p>
+      <p><b>Heading Bar</b> adds the black bars such as <i>THIS WEEK at Park Road</i>.</p>
+      <p><b>New Page</b> starts the next item on a fresh page.</p>
+    </div>
+  </div>
+  <div class="note">Illustration with sample announcements.</div>
+</div>
+
+<!-- ================= PAGE 4 ================= -->
+<div class="page">
+  <h2 style="margin-top:0">5 · How the booklet prints</h2>
+  <p>You type the bulletin <b>in reading order</b>, page 1 to the end, at its finished size (7 × 8.5 inches).
+  When you print, Word puts two pages on each side of a landscape legal sheet, in the order needed for the
+  folded, stapled booklet.</p>
+  <div class="box" style="display:flex;gap:22px;align-items:center;padding:10px 14px">
+    <div style="flex:none">
+      <h3 style="margin-top:0">What you see in Word</h3>
+      <div class="mini" style="flex-wrap:nowrap"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div></div>
+      <div class="lbl">Reading order: 1 = cover, 8 = back cover</div>
+    </div>
+    <div class="arrow">→</div>
+    <div>
+      <h3 style="margin-top:0">What comes out of the printer</h3>
+      <div style="display:grid;grid-template-columns:auto auto;gap:6px 10px">
+        <div><div class="sheet"><div>8</div><div>1</div></div><div class="lbl">Sheet 1 front</div></div>
+        <div><div class="sheet"><div>2</div><div>7</div></div><div class="lbl">Sheet 1 back</div></div>
+        <div><div class="sheet"><div>6</div><div>3</div></div><div class="lbl">Sheet 2 front</div></div>
+        <div><div class="sheet"><div>4</div><div>5</div></div><div class="lbl">Sheet 2 back</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="lbl" style="margin:4px 0 0">Stack the sheets, fold them in the middle, and staple on the fold.</div>
+
+  <h3>Before printing: Check Pages</h3>
+  <div style="display:flex;gap:14px;align-items:flex-start">
+    <div class="dlg" style="width:3.5in;flex:none"><div class="t">Check Pages</div><div class="b">
+      This bulletin has 14 pages = 4 sheets of paper.<br><br>
+      A booklet needs a multiple of 4 pages, so 2 page(s) will be blank. Word would put them at the very end, after
+      your back cover.<br><br>Add 2 blank page(s) just BEFORE the back cover instead?
+      <div class="bt" style="margin-top:8px"><span class="p">Yes</span><span>No</span></div></div></div>
+    <div style="font-size:9.5pt">Each sheet holds 4 pages, so a booklet is always 4, 8, 12, 16… pages.
+      <b>Check Pages</b> warns you and offers to add the blank pages inside the booklet so the back cover stays
+      on the back. Use them for notes or more announcements.</div>
+  </div>
+  <div class="note">Illustration of the Check Pages message.</div>
+
+  <h3>Printing choices</h3>
+  <ul>
+    <li><b>Print Booklet</b>: in the Print window choose <b>Print on Both Sides, flip on short edge</b> and
+      <b>Legal</b> paper. If the printer can't print both sides, choose <i>Manually Print on Both Sides</i> and
+      put the paper back in when Word asks.</li>
+    <li><b>PDF for Printing</b>: saves the sheets exactly as above, for the office copier or a print shop.</li>
+    <li><b>PDF for Website</b>: one page per PDF page, in reading order, for the website or email.</li>
+  </ul>
+
+  <h2>Each week, in short</h2>
+  <ol class="steps">
+    <li>Open last week's bulletin and click <b>Start Next Week</b>. Confirm the date.</li>
+    <li>Update the hymns, readings, sermon and announcements. Use the buttons to add items.</li>
+    <li>Click <b>Booklet View</b> to look it over, then <b>Check Pages</b>.</li>
+    <li><b>Print Booklet</b>, or <b>PDF for Printing</b> for the copier, plus <b>PDF for Website</b>.</li>
+  </ol>
+</div>
+</body></html>
