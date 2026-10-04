@@ -1,0 +1,6 @@
+# Stored with CRLF line endings exactly as Windows / the VBA editor expect.
+# (-text stops git from converting them, so a ZIP download from GitHub works too.)
+*.bas -text
+*.cmd -text
+*.ps1 -text
+*.dotm binary

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Word Publisher Kit ribbon. Every custom button calls Pub_OnAction (modPubCore). -->
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">
+  <ribbon>
+    <tabs>
+
+      <!-- ================= BULLETIN TAB (for volunteers) ================= -->
+      <tab id="tabBulletin" label="Bulletin" insertBeforeMso="TabHome">
+
+        <group id="grpBulletin" label="Bulletin">
+          <menu id="mnuNewBulletin" label="New Bulletin" size="large" imageMso="FileNew"
+                screentip="New Bulletin" supertip="Start a new folded bulletin with a cover, order of worship and announcements.">
+            <button id="Bul_NewLegal" label="Legal paper (7 x 8.5 pages)" onAction="Pub_OnAction"
+                    supertip="Folded booklet printed on 8.5 x 14 legal paper."/>
+            <button id="Bul_NewLetter" label="Letter paper (5.5 x 8.5 pages)" onAction="Pub_OnAction"
+                    supertip="Folded booklet printed on 8.5 x 11 letter paper."/>
+          </menu>
+          <button id="Bul_NextWeek" label="Start Next Week" size="large" imageMso="CalendarInsert" onAction="Pub_OnAction"
+                  supertip="Save a copy of this bulletin for the next service and update the date. Last week's file is not changed."/>
+          <button id="Bul_SetDate" label="Set Date" imageMso="DateAndTimeInsert" onAction="Pub_OnAction"
+                  supertip="Change the service date everywhere it appears."/>
+          <button id="Bul_Settings" label="Church Settings" imageMso="PropertySheet" onAction="Pub_OnAction"
+                  supertip="Church name, address, service times and copyright lines used on new bulletins."/>
+        </group>
+
+        <group id="grpWorship" label="Order of Worship">
+          <button id="Bul_Item" label="Worship Item" size="large" imageMso="AddContentsToTable" onAction="Pub_OnAction"
+                  supertip="Add a line such as The Prelude, The Confession of Sin, The Offering."/>
+          <button id="Bul_Hymn" label="Hymn" size="large" imageMso="AudioInsert" onAction="Pub_OnAction"
+                  supertip="Add a hymn or song with title, verses and hymnal number (and space for the words if needed)."/>
+          <button id="Bul_Scripture" label="Scripture" size="large" imageMso="BookMark" onAction="Pub_OnAction"
+                  supertip="Add a Scripture reading with the Reader / People response."/>
+          <button id="Bul_Responsive" label="Responsive Reading" imageMso="ReviewReplyWithChanges" onAction="Pub_OnAction"
+                  supertip="Add a Call to Worship or other Leader / People reading."/>
+          <button id="Bul_Sermon" label="Sermon" imageMso="Microphone" onAction="Pub_OnAction"
+                  supertip="Add the sermon title, text and preacher."/>
+          <button id="Bul_HeadingBar" label="Heading Bar" imageMso="ShadingGallery" onAction="Pub_OnAction"
+                  supertip="Add a black heading bar such as A Reflection Before the Service."/>
+        </group>
+
+        <group id="grpNews" label="Announcements">
+          <button id="Bul_Announcement" label="Announcement" size="large" imageMso="NewAnnouncement" onAction="Pub_OnAction"
+                  supertip="Add an event: name | date | time | place, followed by details."/>
+          <button id="Bul_Schedule" label="Weekly Schedule" imageMso="TableInsert" onAction="Pub_OnAction"
+                  supertip="Add a Day / Time / Event table."/>
+          <button id="Bul_PageBreak" label="New Page" imageMso="PageBreakInsertWord" onAction="Pub_OnAction"
+                  supertip="Start the next item on a new page."/>
+        </group>
+
+        <group id="grpStyles" label="Format Text">
+          <menu id="mnuStyles" label="Bulletin Styles" size="large" imageMso="QuickStylesGallery"
+                supertip="Format the selected paragraphs with one of the bulletin styles.">
+            <button id="Sty_WorshipItem" tag="Worship Item" label="Worship Item" onAction="Pub_OnAction"/>
+            <button id="Sty_WorshipDetail" tag="Worship Detail" label="Worship Detail" onAction="Pub_OnAction"/>
+            <button id="Sty_HymnLine" tag="Hymn Line" label="Hymn Line" onAction="Pub_OnAction"/>
+            <button id="Sty_Lyrics" tag="Lyrics" label="Lyrics" onAction="Pub_OnAction"/>
+            <button id="Sty_Chorus" tag="Chorus" label="Chorus" onAction="Pub_OnAction"/>
+            <button id="Sty_Scripture" tag="Scripture Text" label="Scripture Text" onAction="Pub_OnAction"/>
+            <button id="Sty_Leader" tag="Leader Line" label="Leader Line" onAction="Pub_OnAction"/>
+            <button id="Sty_People" tag="People Line" label="People Line (bold)" onAction="Pub_OnAction"/>
+            <menuSeparator id="sepSty1"/>
+            <button id="Sty_HeadingBar" tag="Heading Bar" label="Heading Bar" onAction="Pub_OnAction"/>
+            <button id="Sty_SectionTitle" tag="Section Title" label="Section Title" onAction="Pub_OnAction"/>
+            <button id="Sty_AnnTitle" tag="Announcement Title" label="Announcement Title" onAction="Pub_OnAction"/>
+            <button id="Sty_AnnText" tag="Announcement Text" label="Announcement Text" onAction="Pub_OnAction"/>
+            <button id="Sty_Reflection" tag="Reflection Text" label="Reflection Text" onAction="Pub_OnAction"/>
+            <button id="Sty_Credit" tag="Reflection Credit" label="Quotation Credit" onAction="Pub_OnAction"/>
+            <button id="Sty_SmallPrint" tag="Small Print" label="Small Print" onAction="Pub_OnAction"/>
+            <menuSeparator id="sepSty2"/>
+            <button id="Sty_CoverTitle" tag="Cover Title" label="Cover Title" onAction="Pub_OnAction"/>
+            <button id="Sty_CoverSubtitle" tag="Cover Subtitle" label="Cover Subtitle" onAction="Pub_OnAction"/>
+            <button id="Sty_CoverDetails" tag="Cover Details" label="Cover Details" onAction="Pub_OnAction"/>
+          </menu>
+        </group>
+
+        <group id="grpBulPictures" label="Pictures">
+          <button id="Obj_Picture" label="Picture" size="large" imageMso="PictureInsertFromFile" onAction="Pub_OnAction"
+                  supertip="Insert a picture. If a picture placeholder is selected, the picture fills it."/>
+          <button id="Obj_TextBox" label="Text Box" imageMso="TextBoxInsert" onAction="Pub_OnAction"
+                  supertip="A movable text box on the current page."/>
+        </group>
+
+        <group id="grpBulPrint" label="Print">
+          <button id="Bul_PrintBooklet" label="Print Booklet" size="large" imageMso="FilePrint" onAction="Pub_OnAction"
+                  supertip="Print double-sided in folded-booklet order."/>
+          <button id="Bul_BookletPdf" label="PDF for Printing" imageMso="FileSaveAsPdfOrXps" onAction="Pub_OnAction"
+                  supertip="PDF with pages arranged for folding: for a copier or print shop."/>
+          <button id="Out_Pdf" label="PDF for Website" imageMso="FileSaveAsPdfOrXps" onAction="Pub_OnAction"
+                  supertip="PDF with one bulletin page per PDF page: for the website or email."/>
+        </group>
+      </tab>
+
+      <!-- ================= PUBLISHER TAB (free-form layout) ================= -->
+      <tab id="tabPublisherKit" label="Publisher" insertAfterMso="TabHome">
+
+        <group id="grpPublication" label="Publication">
+          <menu id="mnuNewPub" label="New Publication" size="large" imageMso="FileNew">
+            <button id="New_Letter" label="Blank Letter (8.5 x 11)" onAction="Pub_OnAction"/>
+            <button id="New_A4" label="Blank A4" onAction="Pub_OnAction"/>
+            <button id="New_Flyer" label="Flyer" onAction="Pub_OnAction"/>
+            <button id="New_Brochure" label="Tri-fold Brochure" onAction="Pub_OnAction"/>
+            <button id="New_Newsletter" label="Newsletter (3 columns)" onAction="Pub_OnAction"/>
+            <button id="New_Postcard" label="Postcard (6 x 4)" onAction="Pub_OnAction"/>
+            <button id="New_BusinessCard" label="Business Card (3.5 x 2)" onAction="Pub_OnAction"/>
+            <button id="New_GreetingCard" label="Greeting Card (half-fold)" onAction="Pub_OnAction"/>
+            <button id="New_Poster" label="Poster (11 x 17)" onAction="Pub_OnAction"/>
+            <menuSeparator id="sepNew"/>
+            <button id="New_Custom" label="Custom Size..." onAction="Pub_OnAction"/>
+          </menu>
+          <button id="PageSetup" label="Page Setup" imageMso="PageSetupPageDialog" onAction="Pub_OnAction"/>
+        </group>
+
+        <group id="grpPages" label="Pages">
+          <button id="Page_Add" label="Add Page" imageMso="BlankPageInsert" onAction="Pub_OnAction"/>
+          <button id="Page_InsertAfter" label="Insert After" imageMso="PageBreakInsertWord" onAction="Pub_OnAction"
+                  supertip="Insert an empty page after the current page."/>
+          <button id="Page_Delete" label="Delete Page" imageMso="Delete" onAction="Pub_OnAction"/>
+          <button id="Page_Panel" label="Pages Panel" imageMso="NavigationPaneShowHide" onAction="Pub_OnAction"/>
+          <button id="Master_Edit" label="Edit Master" imageMso="HeaderFooterInsert" onAction="Pub_OnAction"
+                  supertip="Objects placed on the master page appear on every page."/>
+          <button id="Master_Close" label="Close Master" imageMso="HeaderFooterClose" onAction="Pub_OnAction"/>
+        </group>
+
+        <group id="grpObjects" label="Objects">
+          <button id="Obj_TextBox2" tag="Obj_TextBox" label="Text Box" size="large" imageMso="TextBoxInsert" onAction="Pub_OnTagAction"/>
+          <button id="Obj_Picture2" tag="Obj_Picture" label="Picture" size="large" imageMso="PictureInsertFromFile" onAction="Pub_OnTagAction"/>
+          <button id="Obj_PicHolder" label="Placeholder" imageMso="PicturePlaceholderInsert" onAction="Pub_OnAction"
+                  supertip="An empty picture frame. Select it and click Picture to fill it."/>
+          <gallery idMso="ShapesInsertGallery"/>
+          <gallery idMso="WordArtInsertGallery"/>
+          <gallery idMso="TableInsertGallery"/>
+        </group>
+
+        <group id="grpLinked" label="Linked Text">
+          <button id="Link_Create" label="Link" imageMso="TextBoxLinkCreate" onAction="Pub_OnAction"
+                  supertip="Select the box with the story, click Link, select an empty box, click Link again."/>
+          <button id="Link_Break" label="Break Link" imageMso="TextBoxLinkBreak" onAction="Pub_OnAction"/>
+          <button id="Link_Continue" label="Continue on Next Page" imageMso="NextPage" onAction="Pub_OnAction"
+                  supertip="Add a linked text box at the same spot on the next page."/>
+          <button id="Link_Overflow" label="Check Overflow" imageMso="ReviewNextComment" onAction="Pub_OnAction"
+                  supertip="Find text boxes whose text does not fit."/>
+        </group>
+
+        <group id="grpArrange" label="Arrange">
+          <button id="Arr_Front" label="Bring to Front" imageMso="ObjectBringToFront" onAction="Pub_OnAction"/>
+          <button id="Arr_Back" label="Send to Back" imageMso="ObjectSendToBack" onAction="Pub_OnAction"/>
+          <button id="Arr_Forward" label="Forward" imageMso="ObjectBringForward" onAction="Pub_OnAction"/>
+          <button id="Arr_Backward" label="Backward" imageMso="ObjectSendBackward" onAction="Pub_OnAction"/>
+          <menu id="mnuAlign" label="Align" imageMso="ObjectsAlignLeft"
+                supertip="One object: align to the page. Several: align to each other.">
+            <button id="Align_Left" label="Align Left" imageMso="ObjectsAlignLeft" onAction="Pub_OnAction"/>
+            <button id="Align_Center" label="Align Center" imageMso="ObjectsAlignCenterHorizontal" onAction="Pub_OnAction"/>
+            <button id="Align_Right" label="Align Right" imageMso="ObjectsAlignRight" onAction="Pub_OnAction"/>
+            <menuSeparator id="sepAlign1"/>
+            <button id="Align_Top" label="Align Top" imageMso="ObjectsAlignTop" onAction="Pub_OnAction"/>
+            <button id="Align_Middle" label="Align Middle" imageMso="ObjectsAlignMiddleVertical" onAction="Pub_OnAction"/>
+            <button id="Align_Bottom" label="Align Bottom" imageMso="ObjectsAlignBottom" onAction="Pub_OnAction"/>
+            <menuSeparator id="sepAlign2"/>
+            <button id="Dist_Horiz" label="Distribute Horizontally" imageMso="AlignDistributeHorizontally" onAction="Pub_OnAction"/>
+            <button id="Dist_Vert" label="Distribute Vertically" imageMso="AlignDistributeVertically" onAction="Pub_OnAction"/>
+          </menu>
+          <menu id="mnuWrap" label="Wrap Text" imageMso="TextWrappingMenu">
+            <button id="Wrap_Front" label="In Front of Text" onAction="Pub_OnAction"/>
+            <button id="Wrap_Behind" label="Behind Text" onAction="Pub_OnAction"/>
+            <button id="Wrap_Square" label="Square" onAction="Pub_OnAction"/>
+            <button id="Wrap_Tight" label="Tight" onAction="Pub_OnAction"/>
+            <button id="Wrap_TopBottom" label="Top and Bottom" onAction="Pub_OnAction"/>
+          </menu>
+          <button id="Obj_Group" label="Group" imageMso="ObjectsGroup" onAction="Pub_OnAction"/>
+          <button id="Obj_Ungroup" label="Ungroup" imageMso="ObjectsUngroup" onAction="Pub_OnAction"/>
+          <button id="Obj_SelPane" label="Selection Pane" imageMso="SelectionPane" onAction="Pub_OnAction"/>
+        </group>
+
+        <group id="grpLayout" label="Layout">
+          <button id="Guides_Setup" label="Layout Guides" imageMso="TableDrawTable" onAction="Pub_OnAction"
+                  supertip="Margin, column and row guides. They do not print."/>
+          <button id="Guides_Toggle" label="Show/Hide Guides" imageMso="ViewGridlines" onAction="Pub_OnAction"/>
+          <button id="Grid_Toggle" label="Grid" imageMso="GridSettings" onAction="Pub_OnAction"/>
+          <button id="Snap_Toggle" label="Snap to Grid" imageMso="SnapToGrid" onAction="Pub_OnAction"/>
+          <button id="Obj_Position" label="Size &amp; Position" imageMso="SizeAndPositionWindow" onAction="Pub_OnAction"
+                  supertip="Type exact measurements for the selected object."/>
+          <button id="View_FitPage" label="Whole Page" imageMso="ZoomOnePage" onAction="Pub_OnAction"/>
+        </group>
+
+        <group id="grpOutput" label="Output">
+          <button id="Out_Print" label="Print" size="large" imageMso="FilePrint" onAction="Pub_OnAction"
+                  supertip="Print without layout guides."/>
+          <button id="Out_Pdf2" tag="Out_Pdf" label="Save as PDF" size="large" imageMso="FileSaveAsPdfOrXps" onAction="Pub_OnTagAction"/>
+        </group>
+      </tab>
+
+    </tabs>
+  </ribbon>
+</customUI>
