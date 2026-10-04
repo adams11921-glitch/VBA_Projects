@@ -86,7 +86,19 @@ way is to sign it with a code-signing certificate.
    * **PDF for Website**: one bulletin page per PDF page, easy to read on a
      phone.
 
-Word pads the booklet with blank pages to a multiple of 4 automatically.
+### How the booklet works (same idea as Publisher)
+
+You see and edit the pages **in reading order** at their finished size
+(cover, 2, 3, … back cover). **Booklet View** shows two pages side by side, like
+the opened booklet. Word's *Book fold* setting (turned on by New Bulletin)
+rearranges the pages only when printing, so the printed stack folds and staples
+into the right order. For example, a 16-page bulletin prints pages 16 & 1 on the
+front of the first sheet and 2 & 15 on the back.
+
+Each sheet holds 4 pages, so a booklet needs a multiple of 4 pages. **Check
+Pages** shows the page and sheet count. It also offers to add the missing blank
+pages *before* the back cover; otherwise Word adds them after it. Print Booklet
+warns you if the count is off.
 
 ## 4. Publisher tab reference
 

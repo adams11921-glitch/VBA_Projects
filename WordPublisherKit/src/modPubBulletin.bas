@@ -522,17 +522,76 @@ Public Sub InsertBulletinPageBreak()
 End Sub
 
 '------------------------------------------------------------------------------
+' Booklet helpers
+'------------------------------------------------------------------------------
+' Two pages side by side, like the opened booklet. Click again for one page.
+Public Sub ToggleBookletView()
+    RequireDoc
+    ActiveWindow.View.Type = wdPrintView
+    With ActiveWindow.View.Zoom
+        If .PageColumns = 2 Then
+            .PageFit = wdPageFitFullPage
+        Else
+            .PageRows = 1
+            .PageColumns = 2
+        End If
+    End With
+End Sub
+
+' A folded, stapled booklet always has a multiple of 4 pages (each sheet holds
+' 4 pages). Offers to add blank pages before the back cover so it stays last.
+Public Sub CheckBookletPages()
+    Dim n As Long, pad As Long, r As Range, i As Long, msg As String
+    RequireDoc
+    n = PageTotal()
+    pad = (4 - (n Mod 4)) Mod 4
+    msg = "This bulletin has " & n & " page" & IIf(n = 1, "", "s") & " = " & _
+        (n + pad) \ 4 & " sheet" & IIf((n + pad) \ 4 = 1, "", "s") & " of paper."
+    If pad = 0 Then
+        MsgBox msg & vbCr & vbCr & "That is a multiple of 4, so it folds into a booklet with no blank pages.", _
+            vbInformation, "Check Pages"
+        Exit Sub
+    End If
+    If n < 2 Then
+        MsgBox msg & vbCr & vbCr & "Word will add " & pad & " blank page(s) at the end when printing.", _
+            vbInformation, "Check Pages"
+        Exit Sub
+    End If
+    If MsgBox(msg & vbCr & vbCr & "A booklet needs a multiple of 4 pages, so " & pad & _
+            " page(s) will be blank. Word would put them at the very end, after your back cover." & vbCr & vbCr & _
+            "Add " & pad & " blank page(s) just BEFORE the back cover instead?" & vbCr & _
+            "(You can fill them with notes, announcements or a sermon-notes page.)", _
+            vbYesNo + vbQuestion, "Check Pages") = vbNo Then Exit Sub
+
+    Set r = PageAnchor(n)
+    For i = 1 To pad
+        r.InsertBefore Chr$(12) & vbCr
+    Next i
+    r.MoveEnd wdCharacter, -1   ' just the new paragraphs, not the back cover's first line
+    r.Style = ActiveDocument.Styles(wdStyleNormal)
+    GoToPage n
+End Sub
+
+'------------------------------------------------------------------------------
 ' Printing
 '------------------------------------------------------------------------------
 Public Sub PrintBooklet()
     RequireDoc
+    If ActiveDocument.Sections(1).PageSetup.BookFoldPrinting And (PageTotal() Mod 4) <> 0 Then
+        If MsgBox("This bulletin has " & PageTotal() & " pages, which is not a multiple of 4. " & _
+                "Word will add blank pages after the back cover." & vbCr & vbCr & _
+                "Print anyway? (Click No, then Check Pages, to fix it.)", _
+                vbYesNo + vbExclamation, "Print Booklet") = vbNo Then Exit Sub
+    End If
     If Not ActiveDocument.Sections(1).PageSetup.BookFoldPrinting Then
         If MsgBox("This document is not set up as a folded booklet. Print it as normal pages?", _
                   vbYesNo + vbQuestion, "Print Booklet") = vbNo Then Exit Sub
     Else
         MsgBox "In the Print window choose:" & vbCr & _
             "   " & ChrW$(8226) & " Print on Both Sides " & ChrW$(8212) & " flip pages on SHORT edge" & vbCr & _
-            "   " & ChrW$(8226) & " Paper: " & PaperName() & ", Landscape" & vbCr & vbCr & _
+            "   " & ChrW$(8226) & " Paper: " & PaperName() & ", Landscape" & vbCr & _
+            "   (No two-sided printer? Choose ""Manually Print on Both Sides"" and" & vbCr & _
+            "    reload the paper when Word asks.)" & vbCr & vbCr & _
             "Word puts the pages in booklet order for you. Fold the stack in half and staple.", _
             vbInformation, "Print Booklet"
     End If

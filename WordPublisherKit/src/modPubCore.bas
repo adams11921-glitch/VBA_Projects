@@ -64,6 +64,8 @@ Public Sub RunCommand(ByVal cmd As String, ByVal tag As String)
         Case "Bul_Schedule": InsertScheduleTable
         Case "Bul_PageBreak": InsertBulletinPageBreak
         Case "Bul_PrintBooklet": PrintBooklet
+        Case "Bul_BookletView": ToggleBookletView
+        Case "Bul_CheckPages": CheckBookletPages
         Case "Bul_BookletPdf": ExportBookletPdf
 
         ' --- Pages ---------------------------------------------------------

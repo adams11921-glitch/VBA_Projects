@@ -19,6 +19,8 @@
                   supertip="Save a copy of this bulletin for the next service and update the date. Last week's file is not changed."/>
           <button id="Bul_SetDate" label="Set Date" imageMso="DateAndTimeInsert" onAction="Pub_OnAction"
                   supertip="Change the service date everywhere it appears."/>
+          <button id="Bul_BookletView" label="Booklet View" imageMso="ViewTwoPages" onAction="Pub_OnAction"
+                  supertip="Show two pages side by side, like the opened booklet. Click again for one page."/>
           <button id="Bul_Settings" label="Church Settings" imageMso="PropertySheet" onAction="Pub_OnAction"
                   supertip="Church name, address, service times and copyright lines used on new bulletins."/>
         </group>
@@ -83,6 +85,8 @@
         <group id="grpBulPrint" label="Print">
           <button id="Bul_PrintBooklet" label="Print Booklet" size="large" imageMso="FilePrint" onAction="Pub_OnAction"
                   supertip="Print double-sided in folded-booklet order."/>
+          <button id="Bul_CheckPages" label="Check Pages" imageMso="ReviewNextComment" onAction="Pub_OnAction"
+                  supertip="A stapled booklet needs a multiple of 4 pages. Shows the sheet count and can add blank pages before the back cover."/>
           <button id="Bul_BookletPdf" label="PDF for Printing" imageMso="FileSaveAsPdfOrXps" onAction="Pub_OnAction"
                   supertip="PDF with pages arranged for folding: for a copier or print shop."/>
           <button id="Out_Pdf" label="PDF for Website" imageMso="FileSaveAsPdfOrXps" onAction="Pub_OnAction"
