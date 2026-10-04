@@ -146,3 +146,29 @@ WordPublisherKit/
   build/Add-Macros.ps1  imports src/*.bas into the .dotm (Windows)
   dist/                 what you send out: WordPublisherKit.dotm, Install.cmd, Uninstall.cmd
 ```
+
+## Letting the bulletin editor improve the add-in with Claude Code
+
+The editor can ask Claude Code, in plain words or by voice, to fix or improve the
+add-in. They don't need a developer. This works on their own Windows PC, in this
+folder:
+
+* `CLAUDE.md` tells Claude who it's working with and how this project is built.
+  It automatically loads `docs/LESSONS.md`, the lessons learned so far.
+* Three commands:
+  * **/start**: begins a session, checks everything is up to date, and reminds
+    Claude of the latest lessons.
+  * **/wrap-up**: confirms the change was tested, records lessons learned,
+    saves the work (git commit), and explains what changed.
+  * **/undo-last-change**: puts back the previous version if something didn't
+    work out.
+* `build\Update-AddIn.ps1` updates the ribbon and the code, checks that the code
+  compiles (keeping the previous version if it doesn't), and installs the
+  add-in. Claude runs it after every change. Word must be closed first.
+
+One-time setup on the editor's PC: install Git, Claude Code, and Word. In Word, turn
+on *Trust Center → Macro Settings → Trust access to the VBA project object
+model*. Then put this folder on the PC with `git clone`, or copy it and run
+`git init`. For voice, Windows' built-in dictation (**Win + H**) types into
+Claude Code like any other text box.
+

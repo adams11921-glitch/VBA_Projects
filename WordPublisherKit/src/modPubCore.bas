@@ -19,6 +19,11 @@ Public Const PUB_WRAP_BEHIND As Long = 5
 
 Private mNameCounter As Long
 
+' Used by build\Update-AddIn.ps1 to confirm the project compiles after an update.
+Public Function PubVersion() As String
+    PubVersion = "Word Publisher Kit"
+End Function
+
 '------------------------------------------------------------------------------
 ' Ribbon entry point
 '------------------------------------------------------------------------------
